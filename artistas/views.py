@@ -3,6 +3,7 @@ from .models import Artista
 from django.contrib.auth.decorators import login_required
 from .forms import ArtistaForm
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 
@@ -78,3 +79,20 @@ def artistas_del(request, pk):
         mensaje="El artista indicado, NO existe."
         context={'mensaje':mensaje, 'artistas':artistas}
         return render (request, 'artistas/artistas_list.html', context)
+
+
+def iniciar_sesion_artista(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        artista = authenticate(request, email=email, password=password)
+
+        if artista is not None and artista.groups.filter(name='Artistas').exists():
+            login(request, artista)
+            # Redireccionar a la página principal para artistas
+            return redirect('home/index')
+        else:
+            # Manejar el caso en que las credenciales no sean válidas para artistas
+            pass
+
+    return render(request, 'artistas/artistas_login.html')

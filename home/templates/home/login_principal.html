@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Principal</title>
+</head>
+<body>
+    <h2>Login Principal</h2>
+    <form method="post" action="{% url 'redirigir_login' %}">
+        {% csrf_token %}
+        <label for="tipo_usuario">Seleccione su tipo de usuario:</label>
+        <select name="tipo_usuario" required>
+            <option value="artista">Artista</option>
+            <option value="cliente">Cliente</option>
+        </select>
+        <br>
+        <button type="submit">Continuar</button>
+    </form>
+</body>
+</html>

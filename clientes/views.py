@@ -89,13 +89,13 @@ def iniciar_sesion_cliente(request):
         password = request.POST.get('password')
         cliente = authenticate(request, email=email, password=password)
 
-        if cliente is not None:
-            login(request, cliente)
-            # Redireccionar a la página principal u otra página después de iniciar sesión
-            return redirect('home/index.html')
+        if cliente is not None and cliente.groups.filter(name='Clientes').exists():
+            auth_login(request, cliente)
+            # Redireccionar a la página principal para ambos, clientes y artistas
+            return redirect('index_home')
         else:
-            # Manejar el caso en que las credenciales no sean válidas
+            # Manejar el caso en que las credenciales no sean válidas para clientes
             pass
 
-    return render(request, 'home/index.html')
+    return render(request, 'clientes/clientes_login.html')
     
