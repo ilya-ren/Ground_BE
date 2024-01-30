@@ -1,9 +1,9 @@
 
 from django.urls import path
-from .views import login_principal, redirigir_login
+from . import views
 
 urlpatterns = [
-    path('login-principal/', login_principal, name='login_principal'),
-    path('redirigir-login/', redirigir_login, name='redirigir_login'),
+    path('login-principal/', views.login_principal, name='login-principal'),
+    path('redirigir-login/', views.redirigir_login, name='redirigir-login'),
    
 ]

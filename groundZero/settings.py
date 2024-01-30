@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'artistas',
     'clientes',
     'obras',
+    'home',
 ]
 
 MIDDLEWARE = [
@@ -53,11 +54,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'groundZero.urls'
-
+#BASE_DIUR / "templates", BASE_DIR/"static"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates", BASE_DIR/"static"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,6 +70,8 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGIN_REDIRECT_URL = "crud_artistas"
 
 WSGI_APPLICATION = 'groundZero.wsgi.application'
 
@@ -129,32 +132,32 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 
-import os
+#import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-]
+#AUTHENTICATION_BACKENDS = [
+#    'django.contrib.auth.backends.ModelBackend',
+#]
 
-AUTH_USER_MODEL = 'clientes.Cliente'
-AUTH_USER_MODEL = 'artistas.Artista'
+#AUTH_USER_MODEL = 'clientes.Cliente'
+#AUTH_USER_MODEL = 'artistas.Artista'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',  # Cambia a 'INFO' o 'ERROR' según tus necesidades
-    },
-}
+#LOGGING = {
+#    'version': 1,
+#    'disable_existing_loggers': False,
+#    'handlers': {
+#        'console': {
+#            'class': 'logging.StreamHandler',
+#        },
+#    },
+#    'root': {
+#        'handlers': ['console'],
+#        'level': 'DEBUG',  # Cambia a 'INFO' o 'ERROR' según tus necesidades
+#    },
+#}
 
 

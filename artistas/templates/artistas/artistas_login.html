@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html" ><img src="img/logo GZ.png"></a>
+          <a class="navbar-brand" href="index.html" ><img src="{% static 'home/img/logo_GZ.png' %}"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -37,11 +37,9 @@
                {% if user.is_authenticated %}
                    {{user.username}}
                 {% else %}
-                   <a href="{% url 'login' %}">login</a>
                 {% endif %}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
                 </div>
             </li>            
             </div>
