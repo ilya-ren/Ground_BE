@@ -3,15 +3,18 @@ from .models import Cliente
 from django.contrib.auth.decorators import login_required
 from .forms import ClienteForm
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.views.decorators.csrf import csrf_protect
 
 
-
+@login_required
 def crud_clientes(request):
     clientes = Cliente.objects.all()
     context = {'clientes':clientes}
     print("enviando datos...")
     return render(request, "clientes/clientes_list.html", context)
 
+@login_required
 def clientes_add(request):
     context={}
 
@@ -37,7 +40,7 @@ def clientes_add(request):
         context= {}
         return render(request, 'clientes/clientes_add.html', context)
     
-
+@login_required
 def clientes_edit(request, pk):
     cliente = Cliente.objects.get(rut=pk)
     if request.method == "POST":
@@ -56,6 +59,7 @@ def clientes_edit(request, pk):
     context = {'cliente': cliente, 'form': form}
     return render(request, 'clientes/clientes_edit.html', context)
 
+@login_required
 def clientes_del(request, pk):
     mensajes=[]
     errores=[]
@@ -77,3 +81,21 @@ def clientes_del(request, pk):
         mensaje="ERROR. No existe tal cliente"
         context={'mensaje':mensaje, 'clientes':clientes}
         return render (request, 'clientes/clientes_list.html', context)
+    
+
+def iniciar_sesion_cliente(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        cliente = authenticate(request, email=email, password=password)
+
+        if cliente is not None:
+            login(request, cliente)
+            # Redireccionar a la página principal u otra página después de iniciar sesión
+            return redirect('home/index.html')
+        else:
+            # Manejar el caso en que las credenciales no sean válidas
+            pass
+
+    return render(request, 'home/index.html')
+    
