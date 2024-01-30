@@ -141,5 +141,20 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_USER_MODEL = 'clientes.Cliente'
+AUTH_USER_MODEL = 'artistas.Artista'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',  # Cambia a 'INFO' o 'ERROR' según tus necesidades
+    },
+}
 
 

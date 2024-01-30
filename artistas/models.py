@@ -9,24 +9,25 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, Permis
 
 
 class ArtistaManager(BaseUserManager):
-    def create_artista(self, email, password, nombre, bio, imagen=None):
+    def create_artista(self, email, password, **extra_fields):
         if not email:
             raise ValueError('Por favor, ingrese un correo electrónico válido.')
-        email = self.normalize_email(email)
 
         artista = self.model(
-            email=email,
-            nombre=nombre,
-            bio=bio,
-            imagen=imagen,
-            is_active=True,
-            is_staff=False,
-            is_superuser=False,
+            email=self.normalize_email(email),
+            password=password,
+            **extra_fields
         )
 
         artista.set_password(password)
         artista.save(using=self._db)
         return artista
+    
+    def create_superuser(self, email, password, **extra_fields):
+        return self.create_artista(email, password, **extra_fields)
+    
+    def get_by_natural_key(self, email):
+        return self.get(email=email)
 
 class Artista(AbstractBaseUser, PermissionsMixin):
     rut          = models.CharField(max_length=13, primary_key=True)
@@ -41,12 +42,11 @@ class Artista(AbstractBaseUser, PermissionsMixin):
     comuna       = models.CharField(max_length=20, blank=False, null=True)
     direccion    = models.CharField(max_length=100, blank=False, null=True)
     email        = models.EmailField(max_length=40, blank=False, null=False, unique=True)
-    password     = models.CharField(max_length=15, blank=False, null=False)
 
     bio          = models.TextField()
     imagen       = models.ImageField(upload_to='galeria_art', blank=True, null=True)
-    is_active    = models.BooleanField(default=False)
-    is_staff     = models.BooleanField(default=False)
+    is_active    = models.BooleanField(default=True)
+   
 
     groups       = models.ManyToManyField(Group, related_name='artistas')
     user_permissions = models.ManyToManyField(Permission, related_name='artistas')

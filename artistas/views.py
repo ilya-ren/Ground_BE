@@ -91,8 +91,5 @@ def iniciar_sesion_artista(request):
             login(request, artista)
             # Redireccionar a la página principal para artistas
             return redirect('home/index')
-        else:
-            # Manejar el caso en que las credenciales no sean válidas para artistas
-            pass
-
+  
     return render(request, 'artistas/artistas_login.html')
